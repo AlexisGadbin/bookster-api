@@ -19,7 +19,13 @@ router
   })
   .use(middleware.auth())
 
-router.delete('logout', [AuthController, 'logout']).prefix('auth').use(middleware.auth())
+router
+  .group(() => {
+    router.delete('logout', [AuthController, 'logout'])
+    router.get('current-user', [AuthController, 'currentUser'])
+  })
+  .prefix('auth')
+  .use(middleware.auth())
 
 router
   .group(() => {

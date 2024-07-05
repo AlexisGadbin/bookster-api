@@ -33,4 +33,8 @@ export default class AuthController {
 
     return response.noContent()
   }
+
+  async currentUser({ response, auth }: HttpContext) {
+    return response.ok(auth.use('web').user)
+  }
 }

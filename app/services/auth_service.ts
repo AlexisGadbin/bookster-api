@@ -16,7 +16,8 @@ export default class AuthService {
     const user = new User()
     user.email = registerRequest.email
     user.password = registerRequest.password
-    user.fullName = registerRequest.fullName
+    user.firstName = registerRequest.firstName
+    user.lastName = registerRequest.lastName
 
     return await user.save()
   }
