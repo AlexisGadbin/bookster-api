@@ -5,7 +5,8 @@ export default class UserMapper {
   static toDto(user: User): UserDto {
     return {
       id: user.id,
-      fullName: user.fullName,
+      firstName: user.firstName,
+      lastName: user.lastName,
       email: user.email,
       password: user.password,
     }
