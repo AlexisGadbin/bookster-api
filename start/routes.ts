@@ -13,13 +13,11 @@ import { middleware } from './kernel.js'
 const AuthorsController = () => import('#controllers/authors_controller')
 const BooksController = () => import('#controllers/books_controller')
 
-router
-  .get('/', async () => {
-    return {
-      hello: 'world',
-    }
-  })
-  .use(middleware.auth())
+router.get('/', async () => {
+  return {
+    hello: 'world',
+  }
+})
 
 router
   .group(() => {

@@ -1,13 +1,29 @@
 services:
   database:
-    image: postgres:14
+    image: postgres:15
     ports:
-      - '127.0.0.1:5432:5432'
+      - '5432:5432'
     volumes:
       - 'psql-data:/var/lib/postgresql/data'
     environment:
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=bookster
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '3333:3333'
+    depends_on:
+      - database
+    environment:
+      - DB_HOST=database
+      - DB_PORT=5432
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - DB_DATABASE=bookster
 
 volumes:
   psql-data:
