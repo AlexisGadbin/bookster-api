@@ -32,7 +32,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKENe }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prepare metadata
         id: meta
@@ -53,12 +53,12 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
-      - name: Deploy the new image
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          script: |
-            cd ~/stacks
-            docker stack deploy -c boumboum-back.yml boumboum-back --with-registry-auth
+      # - name: Deploy the new image
+      #   uses: appleboy/ssh-action@master
+      #   with:
+      #     host: ${{ secrets.HOST }}
+      #     username: ${{ secrets.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     script: |
+      #       cd ~/stacks
+      #       docker stack deploy -c boumboum-back.yml boumboum-back --with-registry-auth
