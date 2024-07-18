@@ -59,6 +59,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
+          proxy_passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             cd ~/app
             docker stack deploy -c docker-stack.yml bookster --with-registry-auth
