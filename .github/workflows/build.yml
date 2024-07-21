@@ -38,7 +38,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.registry }}/alexisgadbin/bookster-api:${{ github.sha }}
+          tags: ${{ env.REGISTRY }}/alexisgadbin/bookster-api:${{ github.sha }}
 
       - name: Deploy the new image
         uses: appleboy/ssh-action@master
