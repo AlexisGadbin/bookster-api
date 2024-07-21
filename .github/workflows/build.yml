@@ -53,7 +53,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             ${{ steps.meta.outputs.tags }}
-            ghcr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ghcr.io/bookster-api/bookster:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Deploy the new image
