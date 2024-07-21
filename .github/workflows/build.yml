@@ -62,5 +62,4 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             cd /home/bookster
-            # docker stack deploy -c docker-stack.yml bookster --with-registry-auth
-            docker service update bookster_api --force --with-registry-auth
+            docker service update --image ghcr.io/alexisgadbin/bookster-api:${{ github.sha }} bookster_api --force --with-registry-auth

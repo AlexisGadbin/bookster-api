@@ -17,7 +17,7 @@ router
   .group(() => {
     router.get('/', async () => {
       return {
-        hello: 'world',
+        hello: 'worldee',
       }
     })
 
