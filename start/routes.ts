@@ -21,12 +21,6 @@ router
       }
     })
 
-    router.get('ping', async () => {
-      return {
-        status: 'ok',
-      }
-    })
-
     router
       .group(() => {
         router.delete('logout', [AuthController, 'logout'])
