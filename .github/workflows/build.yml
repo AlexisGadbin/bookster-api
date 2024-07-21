@@ -62,4 +62,5 @@ jobs:
           passphrase: ${{ secrets.PASSPHRASE }}
           script: |
             cd /home/bookster
-            docker service update --image ghcr.io/alexisgadbin/bookster-api:${{ github.sha }} bookster_api --force --with-registry-auth
+            docker pull ghcr.io/bookster/bookster_api:latest
+            docker service update bookster_api --force --with-registry-auth
