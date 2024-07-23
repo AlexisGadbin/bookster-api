@@ -12,4 +12,14 @@ export default class AuthorService {
   async getAuthor(id: number): Promise<Author> {
     return await Author.findOrFail(id)
   }
+
+  async getAuthorByName(name: string): Promise<Author | null> {
+    return await Author.findBy('name', name)
+  }
+
+  async createAuthor(name: string): Promise<Author> {
+    const author = await Author.create({ name })
+
+    return author
+  }
 }

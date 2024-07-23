@@ -15,7 +15,11 @@ export default class BookService {
 
   async createBook(book: EditBook, userId: number): Promise<BookDto> {
     const user = await this.userService.getById(userId)
-    const author = await this.authorService.getAuthor(book.authorId)
+    let author = await this.authorService.getAuthorByName(book.authorName)
+    if (!author) {
+      author = await this.authorService.createAuthor(book.authorName)
+    }
+
     const savedBook = await Book.create({
       title: book.title,
       description: book.description,
