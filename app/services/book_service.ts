@@ -2,6 +2,7 @@ import BookMapper from '#mappers/book_mapper'
 import Book from '#models/book'
 import { EditBook } from '#validators/edit_book_validator'
 import { inject } from '@adonisjs/core'
+import { ModelPaginatorContract } from '@adonisjs/lucid/types/model'
 import fs from 'node:fs'
 import BookDto from '../dtos/book_dto.js'
 import AuthorService from './author_service.js'
@@ -48,10 +49,16 @@ export default class BookService {
     return BookMapper.toDto(savedBook)
   }
 
-  async getBooks(): Promise<BookDto[]> {
-    const books = await Book.query().preload('author').preload('contributor')
+  async getBooks(limit: number, page: number): Promise<ModelPaginatorContract<Book>> {
+    const books = await Book.query()
+      .preload('author')
+      .preload('contributor')
+      .orderBy('created_at', 'desc')
+      .paginate(page, limit)
 
-    return books.map((book) => BookMapper.toDto(book))
+    books.baseUrl('/books')
+
+    return books
   }
 
   async getBook(id: number): Promise<BookDto> {

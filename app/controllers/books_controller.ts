@@ -7,8 +7,11 @@ import { HttpContext } from '@adonisjs/core/http'
 export default class BooksController {
   constructor(private bookService: BookService) {}
 
-  async getBooks({ response }: HttpContext) {
-    const books = await this.bookService.getBooks()
+  async getBooks({ request, response }: HttpContext) {
+    const qs = request.qs()
+    const limit = qs.limit ? Number.parseInt(qs.limit) : 10
+    const page = qs.page ? Number.parseInt(qs.page) : 1
+    const books = await this.bookService.getBooks(limit, page)
 
     return response.json(books)
   }
