@@ -35,4 +35,14 @@ export default await Env.create(new URL('../', import.meta.url), {
   |----------------------------------------------------------
   */
   SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
+
+  /*
+  |----------------------------------------------------------
+  | Variables for configuring AWS
+  |----------------------------------------------------------
+  */
+  AWS_ACCESS_KEY: Env.schema.string(),
+  AWS_SECRET_ACCESS_KEY: Env.schema.string(),
+  AWS_REGION: Env.schema.string(),
+  AWS_S3_BUCKET: Env.schema.string(),
 })

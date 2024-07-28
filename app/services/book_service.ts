@@ -2,15 +2,18 @@ import BookMapper from '#mappers/book_mapper'
 import Book from '#models/book'
 import { EditBook } from '#validators/edit_book_validator'
 import { inject } from '@adonisjs/core'
+import fs from 'node:fs'
 import BookDto from '../dtos/book_dto.js'
 import AuthorService from './author_service.js'
+import { S3Service } from './s3_service.js'
 import UserService from './user_service.js'
 
 @inject()
 export default class BookService {
   constructor(
     private userService: UserService,
-    private authorService: AuthorService
+    private authorService: AuthorService,
+    private s3Service: S3Service
   ) {}
 
   async createBook(book: EditBook, userId: number): Promise<BookDto> {
@@ -20,9 +23,26 @@ export default class BookService {
       author = await this.authorService.createAuthor(book.authorName)
     }
 
+    //Handle imageCover upload on S3
+
+    let coverImageUrl = null
+
+    console.log(book.coverImage)
+
+    if (book.coverImage && book.coverImage.tmpPath && book.coverImage.type) {
+      const fileContent = fs.readFileSync(book.coverImage.tmpPath)
+      const uploadResult = await this.s3Service.upload(
+        fileContent,
+        book.coverImage.clientName,
+        book.coverImage.type
+      )
+      coverImageUrl = uploadResult.Location
+    }
+
     const savedBook = await Book.create({
       title: book.title,
       description: book.description,
+      coverImageUrl: coverImageUrl || undefined,
     })
     await savedBook.related('author').associate(author)
     await savedBook.related('contributor').associate(user)
