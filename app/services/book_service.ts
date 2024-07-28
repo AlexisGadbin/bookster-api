@@ -25,7 +25,7 @@ export default class BookService {
 
     let coverImageUrl = null
 
-    console.log(book.coverImage)
+    console.log('toto', book.coverImage)
 
     if (book.coverImage && book.coverImage.tmpPath && book.coverImage.type) {
       const fileContent = fs.readFileSync(book.coverImage.tmpPath)
