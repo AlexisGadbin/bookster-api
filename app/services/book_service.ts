@@ -23,8 +23,6 @@ export default class BookService {
       author = await this.authorService.createAuthor(book.authorName)
     }
 
-    //Handle imageCover upload on S3
-
     let coverImageUrl = null
 
     console.log(book.coverImage)

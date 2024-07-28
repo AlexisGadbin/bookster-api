@@ -7,8 +7,6 @@ AWS.config.update({
   region: env.get('AWS_REGION'),
 })
 
-const s3 = new AWS.S3()
-
 interface S3UploadResult {
   Location: string
   ETag: string
@@ -33,7 +31,7 @@ export class S3Service {
     }
 
     return new Promise((resolve, reject) => {
-      s3.upload(params, (err: any, data: any) => {
+      this.s3.upload(params, (err: any, data: any) => {
         if (err) {
           console.log(err)
           reject(err)
