@@ -33,7 +33,22 @@ export class S3Service {
     return new Promise((resolve, reject) => {
       this.s3.upload(params, (err: any, data: any) => {
         if (err) {
-          console.log(err)
+          reject(err)
+        }
+        resolve(data)
+      })
+    })
+  }
+
+  async delete(fileName: string): Promise<void> {
+    const params = {
+      Bucket: env.get('AWS_S3_BUCKET'),
+      Key: fileName,
+    }
+
+    return new Promise((resolve, reject) => {
+      this.s3.deleteObject(params, (err: any, data: any) => {
+        if (err) {
           reject(err)
         }
         resolve(data)

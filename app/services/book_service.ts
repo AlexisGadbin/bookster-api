@@ -2,6 +2,7 @@ import BookMapper from '#mappers/book_mapper'
 import Book from '#models/book'
 import { EditBook } from '#validators/edit_book_validator'
 import { inject } from '@adonisjs/core'
+import { cuid } from '@adonisjs/core/helpers'
 import { ModelPaginatorContract } from '@adonisjs/lucid/types/model'
 import fs from 'node:fs'
 import BookDto from '../dtos/book_dto.js'
@@ -26,13 +27,11 @@ export default class BookService {
 
     let coverImageUrl = null
 
-    console.log('toto', book.coverImage)
-
     if (book.coverImage && book.coverImage.tmpPath && book.coverImage.type) {
       const fileContent = fs.readFileSync(book.coverImage.tmpPath)
       const uploadResult = await this.s3Service.upload(
         fileContent,
-        book.coverImage.clientName,
+        book.title + '_' + cuid(),
         book.coverImage.type
       )
       coverImageUrl = uploadResult.Location
@@ -80,6 +79,11 @@ export default class BookService {
 
     if (book.contributorId !== userId) {
       throw new Error('You are not allowed to delete this book')
+    }
+
+    if (book.coverImageUrl) {
+      const url = new URL(book.coverImageUrl)
+      this.s3Service.delete(url.pathname.substring(1))
     }
 
     await book.delete()
