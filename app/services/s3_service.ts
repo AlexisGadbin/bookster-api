@@ -33,7 +33,7 @@ export class S3Service {
     }
 
     return new Promise((resolve, reject) => {
-      s3.upload(params, (err, data) => {
+      s3.upload(params, (err: any, data: any) => {
         if (err) {
           console.log(err)
           reject(err)
