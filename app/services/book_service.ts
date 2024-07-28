@@ -68,8 +68,13 @@ export default class BookService {
     // Implement this method
   }
 
-  async deleteBook(id: number): Promise<void> {
+  async deleteBook(id: number, userId: number): Promise<void> {
     const book = await Book.findOrFail(id)
+
+    if (book.contributorId !== userId) {
+      throw new Error('You are not allowed to delete this book')
+    }
+
     await book.delete()
   }
 }

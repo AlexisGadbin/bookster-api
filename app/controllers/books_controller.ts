@@ -28,8 +28,9 @@ export default class BooksController {
     return response.json(book)
   }
 
-  async deleteBook({ params, response }: HttpContext) {
-    await this.bookService.deleteBook(params.id)
+  async deleteBook({ params, response, auth }: HttpContext) {
+    const userId = auth.use('web').user!.id
+    await this.bookService.deleteBook(params.id, userId)
 
     return response.json({ message: 'Book deleted successfully' })
   }
