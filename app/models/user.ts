@@ -28,7 +28,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare avatarUrl: string | undefined
 
   @column()
-  declare avatarBackgroundColor: string | undefined
+  declare avatarBackgroundColor: string
 
   @column({ serializeAs: null })
   declare password: string

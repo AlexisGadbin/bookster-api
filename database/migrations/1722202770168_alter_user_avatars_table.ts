@@ -6,7 +6,7 @@ export default class extends BaseSchema {
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
       table.string('avatar_url').nullable()
-      table.string('avatar_background_color').nullable()
+      table.string('avatar_background_color').notNullable().defaultTo('0078D0')
     })
   }
 
