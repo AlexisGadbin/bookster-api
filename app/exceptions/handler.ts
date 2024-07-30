@@ -1,12 +1,12 @@
-import app from '@adonisjs/core/services/app'
-import { HttpContext, ExceptionHandler } from '@adonisjs/core/http'
+import { ExceptionHandler, HttpContext } from '@adonisjs/core/http'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
    * In debug mode, the exception handler will display verbose errors
    * with pretty printed stack traces.
    */
-  protected debug = !app.inProduction
+  // protected debug = !app.inProduction
+  protected debug = true
 
   /**
    * The method is used for handling errors and returning
