@@ -8,7 +8,7 @@ export const editBookValidator = vine.compile(
     authorName: vine.string().trim().minLength(3).maxLength(255),
     coverImage: vine.file({
       size: '2mb',
-      extnames: ['jpg', 'png', 'jpeg'],
+      extnames: ['jpg', 'png', 'jpeg', 'heic'],
     }),
   })
 )
