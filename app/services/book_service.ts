@@ -26,21 +26,33 @@ export default class BookService {
     }
 
     let coverImageUrl = null
+    let backCoverImageUrl = null
 
     if (book.coverImage && book.coverImage.tmpPath && book.coverImage.type) {
       const fileContent = fs.readFileSync(book.coverImage.tmpPath)
       const uploadResult = await this.s3Service.upload(
         fileContent,
-        book.title + '_' + cuid(),
+        book.title + '_cover_' + cuid(),
         book.coverImage.type
       )
       coverImageUrl = uploadResult.Location
+    }
+
+    if (book.backCoverImage && book.backCoverImage.tmpPath && book.backCoverImage.type) {
+      const fileContent = fs.readFileSync(book.backCoverImage.tmpPath)
+      const uploadResult = await this.s3Service.upload(
+        fileContent,
+        book.title + '_back_cover_' + cuid(),
+        book.backCoverImage.type
+      )
+      backCoverImageUrl = uploadResult.Location
     }
 
     const savedBook = await Book.create({
       title: book.title,
       description: book.description,
       coverImageUrl: coverImageUrl || undefined,
+      backCoverImageUrl: backCoverImageUrl || undefined,
     })
     await savedBook.related('author').associate(author)
     await savedBook.related('contributor').associate(user)

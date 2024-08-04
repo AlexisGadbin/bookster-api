@@ -8,4 +8,5 @@ export default class BookDto {
   declare author: AuthorDto
   declare contributor: UserDto
   declare coverImageUrl: string | undefined
+  declare backCoverImageUrl: string | undefined
 }

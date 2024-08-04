@@ -18,6 +18,9 @@ export default class Book extends BaseModel {
   declare coverImageUrl: string | undefined
 
   @column()
+  declare backCoverImageUrl: string | undefined
+
+  @column()
   declare authorId: number
 
   @column()
