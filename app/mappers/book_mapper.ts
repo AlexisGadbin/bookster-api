@@ -10,6 +10,7 @@ export default class BookMapper {
       author: book.author,
       contributor: book.contributor,
       coverImageUrl: book.coverImageUrl,
+      backCoverImageUrl: book.backCoverImageUrl,
     }
   }
 }
