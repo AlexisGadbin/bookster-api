@@ -60,6 +60,64 @@ export default class BookService {
     return BookMapper.toDto(savedBook)
   }
 
+  async updateBook(id: number, book: EditBook, userId: number): Promise<BookDto> {
+    const user = await this.userService.getById(userId)
+    const savedBook = await Book.findOrFail(id)
+
+    if (savedBook.contributorId !== userId) {
+      throw new Error('You are not allowed to update this book')
+    }
+
+    let author = await this.authorService.getAuthorByName(book.authorName)
+    if (!author) {
+      author = await this.authorService.createAuthor(book.authorName)
+    }
+
+    let coverImageUrl = savedBook.coverImageUrl
+    let backCoverImageUrl = savedBook.backCoverImageUrl
+
+    if (book.coverImage && book.coverImage.tmpPath && book.coverImage.type) {
+      if (coverImageUrl) {
+        const url = new URL(coverImageUrl)
+        this.s3Service.delete(url.pathname.substring(1))
+      }
+
+      const fileContent = fs.readFileSync(book.coverImage.tmpPath)
+      const uploadResult = await this.s3Service.upload(
+        fileContent,
+        book.title + '_cover_' + cuid(),
+        book.coverImage.type
+      )
+      coverImageUrl = uploadResult.Location
+    }
+
+    if (book.backCoverImage && book.backCoverImage.tmpPath && book.backCoverImage.type) {
+      if (backCoverImageUrl) {
+        const url = new URL(backCoverImageUrl)
+        this.s3Service.delete(url.pathname.substring(1))
+      }
+
+      const fileContent = fs.readFileSync(book.backCoverImage.tmpPath)
+      const uploadResult = await this.s3Service.upload(
+        fileContent,
+        book.title + '_back_cover_' + cuid(),
+        book.backCoverImage.type
+      )
+      backCoverImageUrl = uploadResult.Location
+    }
+
+    savedBook.title = book.title
+    savedBook.description = book.description
+    savedBook.coverImageUrl = coverImageUrl
+    savedBook.backCoverImageUrl = backCoverImageUrl
+
+    await savedBook.related('author').associate(author)
+    await savedBook.related('contributor').associate(user)
+    await savedBook.save()
+
+    return BookMapper.toDto(savedBook)
+  }
+
   async getBooks(limit: number, page: number): Promise<ModelPaginatorContract<Book>> {
     const books = await Book.query()
       .preload('author')
@@ -80,10 +138,6 @@ export default class BookService {
       .firstOrFail()
 
     return BookMapper.toDto(book)
-  }
-
-  async updateBook() {
-    // Implement this method
   }
 
   async deleteBook(id: number, userId: number): Promise<void> {

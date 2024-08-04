@@ -31,6 +31,16 @@ export default class BooksController {
     return response.json(book)
   }
 
+  async updateBook({ params, request, response, auth }: HttpContext) {
+    console.log('updateBook', request.body())
+    const bookRequest: EditBook = await request.validateUsing(editBookValidator)
+    console.log('validae')
+    const userId = auth.use('web').user!.id
+    const book = await this.bookService.updateBook(params.id, bookRequest, userId)
+
+    return response.json(book)
+  }
+
   async deleteBook({ params, response, auth }: HttpContext) {
     const userId = auth.use('web').user!.id
     await this.bookService.deleteBook(params.id, userId)
