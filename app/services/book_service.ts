@@ -121,6 +121,7 @@ export default class BookService {
 
   async getBooks(limit: number, page: number): Promise<ModelPaginatorContract<Book>> {
     const books = await Book.query()
+      .where('isWishlisted', false)
       .preload('author')
       .preload('contributor')
       .orderBy('created_at', 'desc')
