@@ -18,6 +18,7 @@ export const editBookValidator = vine.compile(
         extnames: ['jpg', 'png', 'jpeg', 'heic'],
       })
       .optional(),
+    isWishlisted: vine.boolean(),
   })
 )
 

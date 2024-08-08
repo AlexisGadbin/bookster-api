@@ -21,6 +21,9 @@ export default class Book extends BaseModel {
   declare backCoverImageUrl: string | undefined
 
   @column()
+  declare isWishlisted: boolean
+
+  @column()
   declare authorId: number
 
   @column()
