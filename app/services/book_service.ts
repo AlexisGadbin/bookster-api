@@ -141,6 +141,23 @@ export default class BookService {
     return BookMapper.toDto(book)
   }
 
+  async getMyWishlistedBooks(
+    limit: number,
+    page: number,
+    userId: number
+  ): Promise<ModelPaginatorContract<Book>> {
+    const books = await Book.query()
+      .where('contributorId', userId)
+      .where('isWishlisted', true)
+      .preload('author')
+      .orderBy('created_at', 'desc')
+      .paginate(page, limit)
+
+    books.baseUrl('/books/wishlist')
+
+    return books
+  }
+
   async deleteBook(id: number, userId: number): Promise<void> {
     const book = await Book.findOrFail(id)
 

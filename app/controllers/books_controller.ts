@@ -16,6 +16,16 @@ export default class BooksController {
     return response.json(books)
   }
 
+  async getMyWishlistedBooks({ auth, request, response }: HttpContext) {
+    const qs = request.qs()
+    const limit = qs.limit ? Number.parseInt(qs.limit) : 10
+    const page = qs.page ? Number.parseInt(qs.page) : 1
+    const userId = auth.use('web').user!.id
+    const books = await this.bookService.getMyWishlistedBooks(limit, page, userId)
+
+    return response.json(books)
+  }
+
   async getBook({ params, response }: HttpContext) {
     const book = await this.bookService.getBook(params.id)
 
@@ -34,7 +44,6 @@ export default class BooksController {
   async updateBook({ params, request, response, auth }: HttpContext) {
     console.log('updateBook', request.body())
     const bookRequest: EditBook = await request.validateUsing(editBookValidator)
-    console.log('validae')
     const userId = auth.use('web').user!.id
     const book = await this.bookService.updateBook(params.id, bookRequest, userId)
 

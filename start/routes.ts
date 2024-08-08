@@ -51,6 +51,13 @@ router
 
     router
       .group(() => {
+        router.get('', [BooksController, 'getMyWishlistedBooks'])
+      })
+      .prefix('wishlist')
+      .use(middleware.auth())
+
+    router
+      .group(() => {
         router.put(':id', [UsersController, 'updateUser'])
       })
       .prefix('users')
