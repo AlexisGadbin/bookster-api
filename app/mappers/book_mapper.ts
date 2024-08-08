@@ -11,6 +11,7 @@ export default class BookMapper {
       contributor: book.contributor,
       coverImageUrl: book.coverImageUrl,
       backCoverImageUrl: book.backCoverImageUrl,
+      isWishlisted: book.isWishlisted,
     }
   }
 }
