@@ -19,6 +19,7 @@ export const editBookValidator = vine.compile(
       })
       .optional(),
     isWishlisted: vine.boolean(),
+    note: vine.number().min(0).max(10).optional(),
   })
 )
 

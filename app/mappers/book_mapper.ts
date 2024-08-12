@@ -12,6 +12,7 @@ export default class BookMapper {
       coverImageUrl: book.coverImageUrl,
       backCoverImageUrl: book.backCoverImageUrl,
       isWishlisted: book.isWishlisted,
+      note: book.note,
     }
   }
 }

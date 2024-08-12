@@ -10,4 +10,5 @@ export default class BookDto {
   declare coverImageUrl: string | undefined
   declare backCoverImageUrl: string | undefined
   declare isWishlisted: boolean
+  declare note: number | undefined
 }

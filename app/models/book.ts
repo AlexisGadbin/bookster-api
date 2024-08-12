@@ -29,6 +29,9 @@ export default class Book extends BaseModel {
   @column()
   declare contributorId: number
 
+  @column()
+  declare note: number | undefined
+
   @belongsTo(() => Author)
   declare author: BelongsTo<typeof Author>
 

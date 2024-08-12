@@ -54,6 +54,7 @@ export default class BookService {
       coverImageUrl: coverImageUrl || undefined,
       backCoverImageUrl: backCoverImageUrl || undefined,
       isWishlisted: book.isWishlisted,
+      note: book.note || undefined,
     })
     await savedBook.related('author').associate(author)
     await savedBook.related('contributor').associate(user)
