@@ -120,9 +120,18 @@ export default class BookService {
     return BookMapper.toDto(savedBook)
   }
 
-  async getBooks(limit: number, page: number): Promise<ModelPaginatorContract<Book>> {
+  async getBooks(
+    limit: number,
+    page: number,
+    search: string
+  ): Promise<ModelPaginatorContract<Book>> {
     const books = await Book.query()
       .where('isWishlisted', false)
+      .where((query) => {
+        query.where('title', 'like', `%${search}%`).orWhereHas('author', (builder) => {
+          builder.where('name', 'like', `%${search}%`)
+        })
+      })
       .preload('author')
       .preload('contributor')
       .orderBy('created_at', 'desc')

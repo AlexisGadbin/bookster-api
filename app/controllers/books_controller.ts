@@ -11,7 +11,9 @@ export default class BooksController {
     const qs = request.qs()
     const limit = qs.limit ? Number.parseInt(qs.limit) : 10
     const page = qs.page ? Number.parseInt(qs.page) : 1
-    const books = await this.bookService.getBooks(limit, page)
+    const search = qs.search ? qs.search : ''
+
+    const books = await this.bookService.getBooks(limit, page, search)
 
     return response.json(books)
   }
