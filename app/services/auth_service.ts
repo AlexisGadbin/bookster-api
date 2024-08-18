@@ -14,6 +14,12 @@ export default class AuthService {
   }
 
   async register(registerRequest: RegisterRequest): Promise<User> {
+    const existingUser = await User.findBy('email', registerRequest.email)
+
+    if (existingUser) {
+      throw new Error('Email already in use')
+    }
+
     if (registerRequest.password !== registerRequest.passwordConfirmation) {
       throw new Error('Password and password confirmation do not match')
     }

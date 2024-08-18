@@ -44,7 +44,6 @@ export default class BooksController {
   }
 
   async updateBook({ params, request, response, auth }: HttpContext) {
-    console.log('updateBook', request.body())
     const bookRequest: EditBook = await request.validateUsing(editBookValidator)
     const userId = auth.use('web').user!.id
     const book = await this.bookService.updateBook(params.id, bookRequest, userId)

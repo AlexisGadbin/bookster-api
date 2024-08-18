@@ -3,5 +3,6 @@ export default class UserDto {
   declare firstName: string
   declare lastName: string
   declare email: string
-  declare password: string
+  declare password?: string
+  declare googleId?: string
 }

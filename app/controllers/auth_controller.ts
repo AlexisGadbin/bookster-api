@@ -11,6 +11,10 @@ export default class AuthController {
   async login({ request, response, auth }: HttpContext) {
     const { email, password } = request.only(['email', 'password'])
 
+    if (!password) {
+      throw new Error('Bad credentials')
+    }
+
     const user = await this.authService.login(email, password)
 
     await auth.use('web').login(user)

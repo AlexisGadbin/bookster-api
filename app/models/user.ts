@@ -25,13 +25,16 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare email: string
 
   @column()
+  declare googleId: string | undefined
+
+  @column()
   declare avatarUrl: string | undefined
 
   @column()
   declare avatarBackgroundColor: string
 
   @column({ serializeAs: null })
-  declare password: string
+  declare password: string | undefined
 
   @hasMany(() => Book)
   declare books: HasMany<typeof Book>

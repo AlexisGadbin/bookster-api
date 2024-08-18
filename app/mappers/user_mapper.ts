@@ -9,6 +9,7 @@ export default class UserMapper {
       lastName: user.lastName,
       email: user.email,
       password: user.password,
+      googleId: user.googleId,
     }
   }
 }

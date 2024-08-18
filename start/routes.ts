@@ -10,6 +10,7 @@
 const AuthController = () => import('#controllers/auth_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const SocialsController = () => import('#controllers/socials_controller')
 const UsersController = () => import('#controllers/users_controller')
 const AuthorsController = () => import('#controllers/authors_controller')
 const BooksController = () => import('#controllers/books_controller')
@@ -21,6 +22,15 @@ router
         hello: 'world',
       }
     })
+
+    router
+      .group(() => {
+        router.get('google', [SocialsController, 'googleRedirect'])
+        router.get('google/callback', [SocialsController, 'googleCallback'])
+        router.get('google/sync', [SocialsController, 'googleSync'])
+      })
+      .prefix('socials')
+      .use(middleware.conditionalAuth())
 
     router
       .group(() => {
