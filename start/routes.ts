@@ -17,12 +17,6 @@ const BooksController = () => import('#controllers/books_controller')
 
 router
   .group(() => {
-    router.get('/', async () => {
-      return {
-        hello: 'world',
-      }
-    })
-
     router
       .group(() => {
         router.get('google', [SocialsController, 'googleRedirect'])
