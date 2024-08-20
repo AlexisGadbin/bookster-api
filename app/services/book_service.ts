@@ -152,14 +152,15 @@ export default class BookService {
     return BookMapper.toDto(book)
   }
 
-  async getMyWishlistedBooks(
+  async getBooksByUserIdAndWishlist(
     limit: number,
     page: number,
-    userId: number
+    userId: number,
+    isWishlisted: boolean
   ): Promise<ModelPaginatorContract<Book>> {
     const books = await Book.query()
       .where('contributorId', userId)
-      .where('isWishlisted', true)
+      .where('isWishlisted', isWishlisted)
       .preload('author')
       .orderBy('created_at', 'desc')
       .paginate(page, limit)

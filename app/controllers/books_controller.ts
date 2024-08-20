@@ -23,13 +23,24 @@ export default class BooksController {
     const limit = qs.limit ? Number.parseInt(qs.limit) : 10
     const page = qs.page ? Number.parseInt(qs.page) : 1
     const userId = auth.use('web').user!.id
-    const books = await this.bookService.getMyWishlistedBooks(limit, page, userId)
+    const books = await this.bookService.getBooksByUserIdAndWishlist(limit, page, userId, true)
+
+    return response.json(books)
+  }
+
+  async getMyBooks({ auth, request, response }: HttpContext) {
+    const qs = request.qs()
+    const limit = qs.limit ? Number.parseInt(qs.limit) : 10
+    const page = qs.page ? Number.parseInt(qs.page) : 1
+    const userId = auth.use('web').user!.id
+    const books = await this.bookService.getBooksByUserIdAndWishlist(limit, page, userId, false)
 
     return response.json(books)
   }
 
   async getBook({ params, response }: HttpContext) {
     const book = await this.bookService.getBook(params.id)
+    console.log(book)
 
     return response.json(book)
   }

@@ -62,6 +62,13 @@ router
 
     router
       .group(() => {
+        router.get('books', [BooksController, 'getMyBooks'])
+      })
+      .prefix('me')
+      .use(middleware.auth())
+
+    router
+      .group(() => {
         router.put(':id', [UsersController, 'updateUser'])
       })
       .prefix('users')
