@@ -112,6 +112,7 @@ export default class BookService {
     savedBook.description = book.description
     savedBook.coverImageUrl = coverImageUrl
     savedBook.backCoverImageUrl = backCoverImageUrl
+    savedBook.isWishlisted = book.isWishlisted
 
     await savedBook.related('author').associate(author)
     await savedBook.related('contributor').associate(user)
