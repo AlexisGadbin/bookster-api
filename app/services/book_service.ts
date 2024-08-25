@@ -116,6 +116,9 @@ export default class BookService {
 
     await savedBook.related('author').associate(author)
     await savedBook.related('contributor').associate(user)
+
+    console.log(savedBook)
+
     await savedBook.save()
 
     return BookMapper.toDto(savedBook)

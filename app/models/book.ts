@@ -12,13 +12,13 @@ export default class Book extends BaseModel {
   declare title: string
 
   @column()
-  declare description: string
+  declare description: string | null
 
   @column()
-  declare coverImageUrl: string | undefined
+  declare coverImageUrl: string | null
 
   @column()
-  declare backCoverImageUrl: string | undefined
+  declare backCoverImageUrl: string | null
 
   @column()
   declare isWishlisted: boolean
@@ -30,7 +30,7 @@ export default class Book extends BaseModel {
   declare contributorId: number
 
   @column()
-  declare note: number | undefined
+  declare note: number | null
 
   @belongsTo(() => Author)
   declare author: BelongsTo<typeof Author>

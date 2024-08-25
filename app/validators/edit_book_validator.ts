@@ -4,7 +4,7 @@ import { Infer } from '@vinejs/vine/types'
 export const editBookValidator = vine.compile(
   vine.object({
     title: vine.string().trim().minLength(3).maxLength(255),
-    description: vine.string().trim().minLength(3).maxLength(1000),
+    description: vine.string().nullable(),
     authorName: vine.string().trim().minLength(3).maxLength(255),
     coverImage: vine
       .file({
@@ -19,7 +19,7 @@ export const editBookValidator = vine.compile(
       })
       .optional(),
     isWishlisted: vine.boolean(),
-    note: vine.number().min(0).max(10).optional(),
+    note: vine.number().min(0).max(10).nullable(),
   })
 )
 
