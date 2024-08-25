@@ -40,7 +40,6 @@ export default class BooksController {
 
   async getBook({ params, response }: HttpContext) {
     const book = await this.bookService.getBook(params.id)
-    console.log(book)
 
     return response.json(book)
   }
