@@ -49,3 +49,4 @@ jobs:
           script: |
             cd /home/bookster
             docker service update --image ghcr.io/alexisgadbin/bookster-api:${{ github.sha }} bookster_api --force --with-registry-auth
+            docker exec -it bookster_api.1.$(docker service ps -f 'desired-state=running' bookster_api -q) node ace migration:run --force
