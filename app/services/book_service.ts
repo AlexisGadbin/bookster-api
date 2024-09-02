@@ -138,7 +138,7 @@ export default class BookService {
       })
       .preload('author')
       .preload('contributor')
-      .orderBy('created_at', 'desc')
+      .orderBy('title', 'asc')
       .paginate(page, limit)
 
     books.baseUrl('/books')
@@ -166,7 +166,7 @@ export default class BookService {
       .where('contributorId', userId)
       .where('isWishlisted', isWishlisted)
       .preload('author')
-      .orderBy('created_at', 'desc')
+      .orderBy('title', 'asc')
       .paginate(page, limit)
 
     books.baseUrl('/books/wishlist')
