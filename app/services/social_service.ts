@@ -8,11 +8,11 @@ export default class SocialService {
   constructor(private utilsService: UtilsService) {}
 
   async googleAuth(googleUser: GoogleUser): Promise<User> {
-    const existingUser = await User.findBy('email', googleUser.email)
+    // const existingUser = await User.findBy('email', googleUser.email)
 
-    if (existingUser) {
-      throw new Error('Email already in use')
-    }
+    // if (existingUser) {
+    //   throw new Error('Email already in use')
+    // }
 
     const user = await User.findBy('googleId', googleUser.id)
 
