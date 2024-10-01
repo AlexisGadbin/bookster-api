@@ -10,6 +10,7 @@
 const AuthController = () => import('#controllers/auth_controller')
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+const ImagesController = () => import('#controllers/images_controller')
 const SocialsController = () => import('#controllers/socials_controller')
 const UsersController = () => import('#controllers/users_controller')
 const AuthorsController = () => import('#controllers/authors_controller')
@@ -79,6 +80,13 @@ router
         router.get('', [AuthorsController, 'getAuthors'])
       })
       .prefix('authors')
+      .use(middleware.auth())
+
+    router
+      .group(() => {
+        router.post('resize', [ImagesController, 'cropImage'])
+      })
+      .prefix('images')
       .use(middleware.auth())
   })
   .prefix('api')

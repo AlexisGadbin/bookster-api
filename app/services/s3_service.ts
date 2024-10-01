@@ -55,4 +55,23 @@ export class S3Service {
       })
     })
   }
+
+  async getImage(fileName: string): Promise<File> {
+    const params = {
+      Bucket: env.get('AWS_S3_BUCKET'),
+      Key: decodeURIComponent(fileName),
+    }
+
+    return new Promise((resolve, reject) => {
+      this.s3.getObject(params, (err: any, data: any) => {
+        if (err) {
+          reject(err)
+        }
+        if (!data.Body) {
+          reject(new Error('Image not found'))
+        }
+        resolve(new File([data.Body], fileName))
+      })
+    })
+  }
 }
