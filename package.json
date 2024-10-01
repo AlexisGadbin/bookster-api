@@ -60,6 +60,7 @@
     "@adonisjs/lucid": "^21.1.0",
     "@adonisjs/session": "^7.4.2",
     "@rlanz/sentry": "^0.1.0",
+    "@sentry/profiling-node": "^7.119.0",
     "@vinejs/vine": "^2.1.0",
     "aws-sdk": "^2.1664.0",
     "luxon": "^3.4.4",
