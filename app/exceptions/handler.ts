@@ -23,6 +23,9 @@ export default class HttpExceptionHandler extends ExceptionHandler {
    * @note You should not attempt to send a response from this method.
    */
   async report(error: unknown, ctx: HttpContext) {
+    if (this.shouldReport(error as any)) {
+      ctx.sentry.captureException(error)
+    }
     return super.report(error, ctx)
   }
 }
